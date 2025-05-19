@@ -2,7 +2,6 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.core.config import settings
 from app.core.logging import setup_logging
-from app.api.v1.endpoints import argument_map
 from app.api.v1.endpoints.api import router_v1  # Import the central router
 
 

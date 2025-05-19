@@ -1,7 +1,8 @@
 from pydantic_settings import BaseSettings, SettingsConfigDict
 from typing import List
-from pydantic import validator
+from pydantic import field_validator 
 from functools import lru_cache
+from pathlib import Path
 
 class Settings(BaseSettings):
     """
@@ -9,6 +10,7 @@ class Settings(BaseSettings):
     """
     # API keys
     OPENAI_API_KEY: str
+    OPENAI_MODEL_NAME: str
 
     # Database configuration
     DATABASE_URL: str
@@ -20,8 +22,11 @@ class Settings(BaseSettings):
     APP_NAME: str = "Argument Map API"
     APP_VERSION: str = "0.1.0"
 
+    # Assuming config.py is in app/core/, so project root is ../../..
+    BASE_DIR: Path = Path(__file__).resolve().parent.parent.parent
+
     # Validator to parse comma-separated ALLOWED_ORIGINS from .env
-    @validator("ALLOWED_ORIGINS", pre=True)
+    @field_validator("ALLOWED_ORIGINS", mode='before')
     def parse_allowed_origins(cls, value):
         if isinstance(value, str):
             # Split comma-separated string into a list, strip whitespace

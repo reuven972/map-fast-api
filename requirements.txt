@@ -13,7 +13,9 @@ langchain-openai>=0.1.0,<0.2.0 # Version compatible avec Langchain
 
 # Database
 sqlalchemy>=2.0.29,<2.1.0 # SQLAlchemy V2
-psycopg2-binary>=2.9.9,<3.0.0 # Semble ok, mais vérifiez compatibilité avec SA 2.0 si besoin
+sqlalchemy-utils>=0.41.1,<0.42.0 # sqlalchemy-utils has long been a go-to for extended types like LtreeType
+psycopg[binary]>=3.1.18,<3.2.0 # SQLAlchemy 2.0 was designed with psycopg3's native async capabilities.
+# alembic>=1.13.0,<1.14.0 # check PyPI for the latest stable version
 
 # XML Processing
 lxml>=5.2.0,<6.0.0
@@ -25,6 +27,24 @@ httpx>=0.27.0,<0.28.0
 
 # Testing
 pytest>=8.1.0,<9.0.0
-# pytest-asyncio # Souvent nécessaire pour tester le code async FastAPI
+pytest-asyncio # Souvent nécessaire pour tester le code async FastAPI
 
-    
+
+
+# fastapi-users>=12.1.0,<13.0.0 # For user management and authentication.
+# python-jose>=3.3.0,<4.0.0 # For JWT (JSON Web Token) handling.
+# passlib[bcrypt]>=1.7.4,<2.0.0 # For secure password hashing.
+# python-multipart>=0.0.5,<0.1.0 # For handling file uploads in FastAPI
+# loguru>=0.7.0,<1.0.0 # A modern, easy-to-use logging library.
+
+# gunicorn>=22.0.0,<23.0.0 # A production-ready WSGI server (to run multiple Uvicorn workers).
+# daphne>=4.0.0,<5.0.0 #  If you plan to use ASGI with WebSockets.
+
+# redis>=5.0.0,<6.0.0 # For a distributed caching solution (requires a Redis server).
+# aiocache>=0.12.0,<0.13.0 # aiocache: For async caching with multiple backends.
+
+
+
+
+
+

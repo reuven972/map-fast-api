@@ -29,8 +29,8 @@
   <!-- Pattern for validating linked premises with group_id -->
   <pattern>
     <rule context="arg:support[@group_id]">
-      <assert test="every $g in ../arg:support[@group_id = current()/@group_id] satisfies $g/@to = current()/@to">
-        All supports with the same group_id must target the same conclusion.
+      <assert test="not(../arg:support[@group_id = current()/@group_id and @to != current()/@to])">
+        All supports with the same group_id must target the same conclusion. (Violation: Found a support with group_id '<value-of select="@group_id"/>' targeting '<value-of select="@to"/>' while another targets '<value-of select="../arg:support[@group_id = current()/@group_id and @to != current()/@to][1]/@to"/>'.)
       </assert>
     </rule>
   </pattern>

@@ -7,7 +7,7 @@ class ArgumentMapRepository:
     def __init__(self, db_session: Session):
         self.db_session = db_session
 
-    def create_argument_map(self, parsed_data: dict, organization_id: int, creator_id: int) -> str:
+    def create_argument_map(self, parsed_data: dict, organization_id: int | None, creator_id: int | None) -> ArgumentMap:
         """
         Create an argument map and its associated statements, relationships, and evidence.
         
@@ -72,16 +72,14 @@ class ArgumentMapRepository:
                 )
                 self.db_session.add(evidence)
 
-            self.db_session.commit()
             logging.info(f"Created argument map with ID {argument_map.id}")
-            return str(argument_map.id)
+            return argument_map
 
         except Exception as e:
-            self.db_session.rollback()
-            logging.error(f"Error creating argument map: {str(e)}")
+            logging.error(f"Error preparing argument map for database: {str(e)}")
             raise
 
-    def get_argument_map(self, map_id: int) -> ArgumentMap:
+    def get_argument_map(self, map_id: int) -> ArgumentMap | None:
         """
         Retrieve an argument map by ID.
         """

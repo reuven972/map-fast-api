@@ -30,4 +30,13 @@ class ArgumentMapResponseModel(BaseModel):
     )
 
     class Config:
-        orm_mode = True  # Permet la conversion automatique des objets ORM en Pydantic, utile pour une intégration future
+        from_attributes = True # Pydantic V2 way
+
+class XMLInputModel(BaseModel):
+    """
+    Modèle pour l'entrée de contenu XML à importer pour créer une carte argumentative.
+    """
+    xml_content: str = Field(
+        ...,
+        description="Le contenu XML à importer pour créer la carte argumentative."
+    )

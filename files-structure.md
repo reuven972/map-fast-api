@@ -23,10 +23,9 @@ my_fastapi_app/
 │   ├── models/
 │   │   ├── __init__.py
 │   │   └── argument_map.py     # Modèles Pydantic pour validation
-│   ├── schemas/
-│   │   ├── xml/
-│   │   │   ├── argument_map.xsd     # Schémas XSD pour validation XML
-│   │   │   └── business_rules.sch   # Schémas SCH pour règles métier
+│   ├── xml_definitions/        # Schémas pour validation XML
+│   │   ├── argument_map.xsd     # Schémas XSD pour validation XML
+│   │   └── business_rules.sch   # Schémas SCH pour règles métier
 │   └── database/
 │       ├── __init__.py
 │       └── db.py              # Configuration de la connexion à PostgreSQL

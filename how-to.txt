@@ -1,0 +1,21 @@
+python -m venv venv
+
+venv\Scripts\activate
+
+pip install fastapi uvicorn
+
+
+python main.py
+
+
+
+
+deactivate
+
+
+
+from file
+
+venv\Scripts\activate
+
+python main.py

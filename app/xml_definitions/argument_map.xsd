@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="http://example.com/argument_map"
+           xmlns:arg="http://example.com/argument_map"
+           elementFormDefault="qualified">
+
+  <!-- Type for statement IDs -->
+  <xs:simpleType name="statementIdType">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="[a-zA-Z0-9_]+"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <!-- Type for evidence IDs -->
+  <xs:simpleType name="evidenceIdType">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="[a-zA-Z0-9_]+"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <!-- Complex type for statements -->
+  <xs:complexType name="statementType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="id" type="arg:statementIdType" use="required"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <!-- Complex type for evidence items -->
+  <xs:complexType name="evidenceItemType">
+    <xs:sequence>
+      <xs:element name="title" type="xs:string"/>
+      <xs:element name="source_type" type="xs:string" minOccurs="0"/>
+      <xs:element name="source_name" type="xs:string" minOccurs="0"/>
+      <xs:element name="url" type="xs:string" minOccurs="0"/>
+      <xs:element name="description" type="xs:string" minOccurs="0"/>
+      <xs:element name="credibility_rating" type="xs:float" minOccurs="0"/>
+    </xs:sequence>
+    <xs:attribute name="id" type="arg:evidenceIdType" use="required"/>
+    <xs:attribute name="for" type="arg:statementIdType" use="required"/>
+  </xs:complexType>
+
+  <!-- Root element: argument_map -->
+  <xs:element name="argument_map">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="title" type="xs:string"/>
+        <xs:element name="description" type="xs:string" minOccurs="0"/>
+        <xs:element name="statements">
+          <xs:complexType>
+            <xs:choice minOccurs="0" maxOccurs="unbounded">
+              <xs:element name="premise" type="arg:statementType"/>
+              <xs:element name="conclusion" type="arg:statementType"/>
+              <xs:element name="rebuttal" type="arg:statementType"/>
+              <xs:element name="counter_conclusion" type="arg:statementType"/>
+            </xs:choice>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="relationships" minOccurs="0">
+          <xs:complexType>
+            <xs:choice minOccurs="0" maxOccurs="unbounded">
+              <xs:element name="support">
+                <xs:complexType>
+                  <xs:attribute name="from" type="arg:statementIdType" use="required"/>
+                  <xs:attribute name="to" type="arg:statementIdType" use="required"/>
+                  <xs:attribute name="group_id" type="xs:string" use="optional"/>
+                  <xs:attribute name="strength" type="xs:float" use="optional"/>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="oppose">
+                <xs:complexType>
+                  <xs:attribute name="from" type="arg:statementIdType" use="required"/>
+                  <xs:attribute name="to" type="arg:statementIdType" use="required"/>
+                  <xs:attribute name="group_id" type="xs:string" use="optional"/>
+                  <xs:attribute name="strength" type="xs:float" use="optional"/>
+                </xs:complexType>
+              </xs:element>
+            </xs:choice>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="evidence" minOccurs="0">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="item" type="arg:evidenceItemType" minOccurs="0" maxOccurs="unbounded"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+</xs:schema>
